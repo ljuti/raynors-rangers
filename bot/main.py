@@ -33,8 +33,17 @@ class MyBot(sc2.BotAI):
         pass
 
     def iteration_zero(self, game):
-        pass
+        self.print_ramps(game)
 
-    @property
-    def time_budget_available(self):
-        pass
+    def print_ramps(self, game):
+        ramps = sorted(game.game_info.map_ramps, key=lambda x: x.top_center.distance_to(self.start_location))
+        close = ramps[0:3]
+
+        print("*** RAMPS (close) ***")
+        for ramp in close:
+            print(f"Ramp at {ramp.top_center} (top) {ramp.bottom_center} (bottom)")
+            print(f"  points: {ramp.points}")
+            print(f"  size: {ramp.size}")
+            print(f"  upper: {ramp.upper}")
+            print(f"  upper two: {ramp.upper2_for_ramp_wall}")
+            print("\n")
