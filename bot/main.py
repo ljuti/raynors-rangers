@@ -1,24 +1,40 @@
+import time
 import json
 from pathlib import Path
 
 import sc2
 
-# Bots are created as classes and they need to have on_step method defined.
-# Do not change the name of the class!
 class MyBot(sc2.BotAI):
     with open(Path(__file__).parent / "../botinfo.json") as f:
         NAME = json.load(f)["name"]
 
-    # On_step method is invoked each game-tick and should not take more than
-    # 2 seconds to run, otherwise the bot will timeout and cannot receive new
-    # orders.
-    # It is important to note that on_step is asynchronous - meaning practices
-    # for asynchronous programming should be followed.
     async def on_step(self, iteration):
+        if not iteration:
+            self.pre_game_setup(self)
+
         if iteration == 0:
-            await self.chat_send(f"Name: {self.NAME}")
-            # FIXME: uncomment to have simplest winning strategy!
-            # actions = []
-            # for worker in self.workers:
-            #     actions.append(worker.attack(self.enemy_start_locations[0]))
-            # await self.do_actions(actions)
+            self.iteration_zero(self)
+
+        try:
+            # step_start = time.time()
+            budget = self.time_budget_available
+            if budget and budget < 0.3:
+                print("** SKIPPING A STEP to avoid bot freezing up **")
+            else:
+                await self.main_loop(self)
+        except Exception as crash:
+            print("|||||||| CRASHED ||||||||")
+            print(crash)
+
+    async def main_loop(self, game):
+        pass
+
+    def pre_game_setup(self, game):
+        pass
+
+    def iteration_zero(self, game):
+        pass
+
+    @property
+    def time_budget_available(self):
+        pass
