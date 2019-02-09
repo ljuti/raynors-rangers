@@ -29,4 +29,4 @@ class Uplink():
     await self.sio.emit("unit", { "type": unit.type_id.name, "tag": unit.tag, "position": unit.position }, namespace="/units")
 
   async def structure(self, structure):
-    await self.sio.emit("structure", { "type": unit.type_id.name, "tag": unit.tag, "position": unit.position }, namespace="/units")
+    await self.sio.emit("structure", { "type": structure.type_id.name, "tag": structure.tag, "position": structure.position }, namespace="/units")
