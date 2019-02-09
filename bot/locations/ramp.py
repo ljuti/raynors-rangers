@@ -13,6 +13,9 @@ class RampLocation(Location):
       self.ramp_object = ramp
       self.initialize_from_ramp()
 
+  async def update(self, game):
+    pass
+
   def initialize_from_ramp(self):
     """ With ramps, the center is assumed to be the top center of ramp """
     self.center_position = self.ramp_object.top_center
