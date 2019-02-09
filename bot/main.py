@@ -2,14 +2,24 @@ import time
 import json
 from pathlib import Path
 
+from bot.uplink.uplink import Uplink
+
 import sc2
+from sc2.constants import UnitTypeId
 
 class MyBot(sc2.BotAI):
     with open(Path(__file__).parent / "../botinfo.json") as f:
         NAME = json.load(f)["name"]
 
+    def __init__(self):
+        self.uplink = Uplink()
+
+    def on_start(self):
+        pass
+
     async def on_step(self, iteration):
         if not iteration:
+            await self.uplink.connect()
             self.pre_game_setup(self)
 
         if iteration == 0:
@@ -17,23 +27,12 @@ class MyBot(sc2.BotAI):
 
         await self.main_loop(self)
 
-        # try:
-        #     # step_start = time.time()
-        #     budget = self.time_budget_available
-        #     if budget and budget < 0.3:
-        #         print("** SKIPPING A STEP to avoid bot freezing up **")
-        #     else:
-        #         await self.main_loop(self)
-        # except Exception as crash:
-        #     print("|||||||| CRASHED ||||||||")
-        #     print(crash)
-
     async def main_loop(self, game):
         if game.time % 10 == 0:
             game_info = await self._client.get_game_info()
             game_info.map_ramps = self._game_info._find_ramps()
-            # print(game_info.map_ramps)
-            # self.print_ramps(game, game_info.map_ramps)
+            scv = self.workers.random
+            await self.uplink.relay(scv.build(UnitTypeId.BARRACKS, self.start_location))
 
         if game.time % 15 == 0:
             self.print_ramps(game)
