@@ -1,6 +1,7 @@
 from bot.factories.build_command import BuildCommandFactory
 from bot.commands.build_command import BuildCommand
 from bot.commands.requirements.build_command import BuildCommandRequirement
+from bot.commands.conditions.build_command import BuildCommandGameCondition
 from bot.locations.location import StructurePosition
 
 from mamba import description, context, it, shared_context, before, after
@@ -108,3 +109,21 @@ with description("BuildCommand") as self:
       expect(len(self.command.requirements)).to(equal(1))
       for requirement in self.command.requirements:
         expect(requirement).to(be_a(BuildCommandRequirement))
+
+  with description("Game conditions") as self:
+    with before.each: # pylint: disable=no-member
+      self.command = BuildCommand()
+      self.data = {
+        "structure": UnitTypeId.BARRACKS,
+        "position": StructurePosition(Point2((50.0, 50.0))),
+        "conditions": {
+          "at_supply": 15,
+          "at_game_time": 45,
+        }
+      }
+
+    with it("has an array of game conditions objects"):
+      self.command.init(self.data)
+      expect(len(self.command.game_conditions)).to(equal(2))
+      for condition in self.command.game_conditions:
+        expect(condition).to(be_a(BuildCommandGameCondition))
