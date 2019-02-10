@@ -2,6 +2,7 @@ import time
 import json
 from pathlib import Path
 
+from bot.command_bus import CommandBus
 from bot.uplink.uplink import Uplink
 
 import sc2
@@ -12,6 +13,7 @@ class MyBot(sc2.BotAI):
         NAME = json.load(f)["name"]
 
     def __init__(self):
+        self.command_bus = CommandBus(self)
         self.uplink = Uplink()
 
     def on_start(self):

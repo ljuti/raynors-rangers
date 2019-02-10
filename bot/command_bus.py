@@ -5,7 +5,7 @@ class CommandBus():
     self.game = game
 
   def prioritize(self, command: UnitCommand):
-    pass
+    return True
 
   def queue(self, command: UnitCommand, silent=True):
     return True
