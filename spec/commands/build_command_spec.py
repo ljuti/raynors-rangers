@@ -2,10 +2,10 @@ from bot.factories.build_command import BuildCommandFactory
 from bot.commands.build_command import BuildCommand
 from bot.commands.requirements.build_command import BuildCommandRequirement
 from bot.commands.conditions.build_command import BuildCommandGameCondition
-from bot.locations.location import StructurePosition
+from bot.locations.location import StructurePosition, NamedPosition, OnStructurePosition, BaseLocationPosition, NextToStructurePosition
 
 from mamba import description, context, it, shared_context, before, after
-from expects import expect, be_a, equal, be_true, be_callable, have_property
+from expects import expect, be_a, equal, be_true, be_callable, have_property, be_false
 import doubles
 
 from sc2.constants import UnitTypeId
@@ -127,3 +127,99 @@ with description("BuildCommand") as self:
       expect(len(self.command.game_conditions)).to(equal(2))
       for condition in self.command.game_conditions:
         expect(condition).to(be_a(BuildCommandGameCondition))
+
+  with description("Position") as self:
+    with description("as StructurePosition") as self:
+      with before.each: # pylint: disable=no-member
+        self.command = BuildCommand()
+        self.data = {
+          "structure": UnitTypeId.BARRACKS,
+          "position": StructurePosition(Point2((50.0, 50.0)))
+        }
+
+      with it("has a position as StructurePosition"):
+        self.command.init(self.data)
+        expect(self.command.position).to(be_a(StructurePosition))
+        expect(self.command.position.coordinates).to(be_a(Point2))
+
+    with description("as Point object") as self:
+      with before.each: # pylint: disable=no-member
+        self.command = BuildCommand()
+        self.data = {
+          "structure": UnitTypeId.BARRACKS,
+          "position": Point2((50.0, 40.0))
+        }
+
+      with it("has a position as StructurePosition when given a Point as data"):
+        self.command.init(self.data)
+        expect(self.command.position).to(be_a(StructurePosition))
+        expect(self.command.position.coordinates).to(equal(Point2((50.0, 40.0))))
+
+    with description("as other input (e.g. from JSON)") as self:
+      with description("named position") as self:
+        with before.each: # pylint: disable=no-member
+          self.command = BuildCommand()
+          self.data = {
+            "structure": UnitTypeId.STARPORT,
+            "position": {
+              "name": "starport_1"
+            }
+          }
+
+        with it("has a NamedPosition with correct position designation"):
+          self.command.init(self.data)
+          expect(self.command.position).to(be_a(NamedPosition))
+          expect(self.command.position.position_type).to(equal("name"))
+          expect(self.command.position.designation).to(equal("starport_1"))
+          expect(self.command.position.coordinates_resolved).to(be_false)
+
+      with description("designated structure") as self:
+        with before.each: # pylint: disable=no-member
+          self.command = BuildCommand()
+          self.data = {
+            "structure": UnitTypeId.TECHLAB,
+            "position": {
+              "structure": "starport_1"
+            }
+          }
+
+        with it("has a OnStructurePosition with correct position designation"):
+          self.command.init(self.data)
+          expect(self.command.position).to(be_a(OnStructurePosition))
+          expect(self.command.position.position_type).to(equal("structure"))
+          expect(self.command.position.designation).to(equal("starport_1"))
+          expect(self.command.position.coordinates_resolved).to(be_false)
+
+      with description("designated base") as self:
+        with before.each: # pylint: disable=no-member
+          self.command = BuildCommand()
+          self.data = {
+            "structure": UnitTypeId.REFINERY,
+            "position": {
+              "base": "main_cc"
+            }
+          }
+
+        with it("has a BaseLocationPosition"):
+          self.command.init(self.data)
+          expect(self.command.position).to(be_a(BaseLocationPosition))
+          expect(self.command.position.position_type).to(equal("base"))
+          expect(self.command.position.designation).to(equal("main_cc"))
+          expect(self.command.position.coordinates_resolved).to(be_false)
+
+      with description("next to a structure") as self:
+        with before.each: # pylint: disable=no-member
+          self.command = BuildCommand()
+          self.data = {
+            "structure": UnitTypeId.FACTORY,
+            "position": {
+              "next_to": "barracks_1"
+            }
+          }
+
+        with it("has a NextToStructurePosition"):
+          self.command.init(self.data)
+          expect(self.command.position).to(be_a(NextToStructurePosition))
+          expect(self.command.position.position_type).to(equal("next_to"))
+          expect(self.command.position.designation).to(equal("barracks_1"))
+          expect(self.command.position.coordinates_resolved).to(be_false)

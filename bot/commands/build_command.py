@@ -1,10 +1,10 @@
 from bot.commands.command import Command
-from bot.locations.location import StructurePosition
+from bot.locations.location import StructurePosition, NamedPosition, OnStructurePosition, BaseLocationPosition, NextToStructurePosition
 from bot.commands.requirements.build_command import BuildCommandRequirement
 from bot.commands.conditions.build_command import BuildCommandGameCondition
 
 from sc2.constants import UnitTypeId
-from sc2.position import Point2
+from sc2.position import Point2, Point3
 
 class BuildCommand(Command):
   def __init__(self):
@@ -20,9 +20,27 @@ class BuildCommand(Command):
 
   def init(self, data: dict):
     self.structure = data.get('structure', None)
-    self.position = data.get('position', None)
+    self.resolve_position(data.get('position', None))
     self.resolve_requirements(data.get('requirements', []))
     self.resolve_game_conditions(data.get('conditions', []))
+
+  def resolve_position(self, position):
+    if isinstance(position, StructurePosition):
+      self.position = position
+    elif isinstance(position, ( Point2, Point3 )):
+      self.position = StructurePosition(position)
+    elif isinstance(position, dict):
+      self.resolve_position_data(position)
+
+  def resolve_position_data(self, data):
+    if "name" in data.keys():
+      self.position = NamedPosition(data.get("name", None))
+    elif "structure" in data.keys():
+      self.position = OnStructurePosition(data.get("structure", None))
+    elif "base" in data.keys():
+      self.position = BaseLocationPosition(data.get("base", None))
+    elif "next_to" in data.keys():
+      self.position = NextToStructurePosition(data.get("next_to", None))
 
   def resolve_requirements(self, r_data):
     for data in r_data:
