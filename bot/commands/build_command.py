@@ -1,5 +1,6 @@
 from bot.commands.command import Command
 from bot.locations.location import StructurePosition
+from bot.commands.requirements.build_command import BuildCommandRequirement
 
 from sc2.constants import UnitTypeId
 from sc2.position import Point2
@@ -8,13 +9,23 @@ class BuildCommand(Command):
   def __init__(self):
     super().__init__()
 
-    self.structure = self.position = self.game_conditions = None
+    self.structure = self.position = self.game_conditions = self.meta = self.assigned_to = None
+    self.under_execution = self.completed = False
     self.requirements = []
+
+  def __repr__(self):
+    return f"BuildCommand([{self.command_id}] for {self.structure} @ {self.position}, completed: {self.completed})"
 
   def init(self, data: dict):
     self.structure = data.get('structure', None)
     self.position = data.get('position', None)
-    self.requirements = data.get('requirements', [])
+    self.resolve_requirements(data.get('requirements', []))
+
+  def resolve_requirements(self, r_data):
+    for data in r_data:
+      requirement = BuildCommandRequirement(data)
+      if isinstance(requirement, BuildCommandRequirement):
+        self.requirements.append(requirement)
 
   @property
   def is_valid(self) -> bool:
