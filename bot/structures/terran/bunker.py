@@ -7,9 +7,9 @@ class Bunker(BaseStructure):
 
   async def update(self, game, unit):
     self.unit = unit
-    self.close_enemies = game.get_nearby_enemies_for(unit)
+    self.close_enemies = game.nearby_enemies_for(unit)
 
-    if self.under_fire():
+    if self.under_fire:
       self.call_for_repair_force(game)
 
     if self.damaged:

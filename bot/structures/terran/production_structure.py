@@ -1,10 +1,11 @@
 from bot.structures.terran.base_structure import BaseStructure
 from bot.locations.location import Location, Position
 
+from sc2.unit import Unit
 from sc2.constants import AbilityId
 
 class ProductionStructure(BaseStructure):
-  def __init__(self, unit):
+  def __init__(self, unit: Unit):
     BaseStructure.__init__(self, unit)
     self.unit = unit
     self.production_ready = False
