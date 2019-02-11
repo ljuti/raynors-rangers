@@ -1,8 +1,13 @@
 from sc2.constants import UnitTypeId, AbilityId
+from sc2.unit import Unit
 
 class Reactorable():
-  def __init__(self, unit):
+  def __init__(self, unit: Unit, model):
     self.unit = unit
+    self.model = model
+
+  def has_no_addon(self) -> bool:
+    return bool(self.unit.add_on_tag == 0)
 
   def build_reactor(self, game):
     if game.can_afford(self.reactor_type(self.unit.type_id)) and self.has_no_addon():

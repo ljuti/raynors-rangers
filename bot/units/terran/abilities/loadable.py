@@ -22,14 +22,14 @@ class Loadable:
     return False
 
   def unload(self, target: Unit, command_bus: CommandBus):
-    if is_passenger:
+    if self.is_passenger:
       self.loaded = False
       self.loaded_in = None
       return command_bus.queue(target(AbilityId.UNLOADUNIT, self.unit))
     return False
 
   def unload_at(self, target: Unit, position: Point2, command_bus: CommandBus):
-    if is_passenger:
+    if self.is_passenger:
       return command_bus.queue(target(AbilityId.UNLOADALLAT, position, queue=True))
     return False
 

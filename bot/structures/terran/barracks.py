@@ -14,11 +14,6 @@ class Barracks(ProductionStructure, Landable, Liftable, Reactorable, Techlabable
     self.unit = unit
     self.model = model
 
-    # Landable.__init__(self, unit)
-    # Liftable.__init__(self, unit)
-    # Reactorable.__init__(self, unit)
-    # Techlabable.__init__(self, unit)
-
   def research_stim(self, game):
     if game.can_afford(UpgradeId.STIMPACK) and self.has_techlab(game):
       techlab = game.units.find_by_tag(self.unit.add_on_tag)

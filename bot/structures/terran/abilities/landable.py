@@ -7,10 +7,12 @@ class Landable:
   def __init__(self, unit: Unit, model):
     self.unit = unit
     self.model = model
+    self.landing_position = None
 
   def land(self, command_bus: CommandBus):
     position = self.landing_position
     if position is None:
+      """ TODO/FIXME: Should get the landing position from location service """
       position = self.get_landing_position(game)
 
     command_bus.queue(self.land_action(self.landing_position))

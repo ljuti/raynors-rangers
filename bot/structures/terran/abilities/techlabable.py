@@ -1,8 +1,12 @@
 from sc2.constants import UnitTypeId
 
 class Techlabable:
-  def __init__(self, unit):
+  def __init__(self, unit, model):
     self.unit = unit
+    self.model = model
+
+  def has_no_addon(self) -> bool:
+    return bool(self.unit.add_on_tag == 0)
 
   def build_techlab(self, game):
     if game.can_afford(self.techlab_type(self.unit.type_id)) and self.has_no_addon():
