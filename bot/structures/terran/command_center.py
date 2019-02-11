@@ -13,6 +13,6 @@ class CommandCenter(BaseStructure, Landable, Liftable, Morphable):
     self.unit = unit
     self.model = model
 
-    Landable.__init__(self, unit)
-    Liftable.__init__(self, unit)
-    Morphable.__init__(self, unit)
+    Landable.__init__(self, unit, model)
+    Liftable.__init__(self, unit, model)
+    Morphable.__init__(self, unit, model)

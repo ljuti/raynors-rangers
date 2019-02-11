@@ -5,9 +5,10 @@ from sc2.unit import Unit
 from sc2.constants import AbilityId
 
 class ProductionStructure(BaseStructure):
-  def __init__(self, unit: Unit):
+  def __init__(self, unit: Unit, model):
     BaseStructure.__init__(self, unit)
     self.unit = unit
+    self.model = model
     self.production_ready = False
 
   def post_construction_complete(self, game):

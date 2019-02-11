@@ -10,14 +10,14 @@ from sc2.constants import UpgradeId
 
 class Barracks(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
   def __init__(self, unit: Unit, model: BarracksModel):
-    ProductionStructure.__init__(self, unit)
+    super().__init__(unit, model)
     self.unit = unit
     self.model = model
 
-    Landable.__init__(self, unit)
-    Liftable.__init__(self, unit)
-    Reactorable.__init__(self, unit)
-    Techlabable.__init__(self, unit)
+    # Landable.__init__(self, unit)
+    # Liftable.__init__(self, unit)
+    # Reactorable.__init__(self, unit)
+    # Techlabable.__init__(self, unit)
 
   def research_stim(self, game):
     if game.can_afford(UpgradeId.STIMPACK) and self.has_techlab(game):

@@ -1,15 +1,19 @@
 from sc2.constants import UnitTypeId, AbilityId
+from sc2.unit import Unit
+
+from bot.command_bus import CommandBus
 
 class Landable:
-  def __init__(self, unit):
+  def __init__(self, unit: Unit, model):
     self.unit = unit
+    self.model = model
 
-  def land(self, game):
+  def land(self, command_bus: CommandBus):
     position = self.landing_position
     if position is None:
       position = self.get_landing_position(game)
 
-    game.command_bus.queue(self.land_action(self.landing_position))
+    command_bus.queue(self.land_action(self.landing_position))
 
   def land_action(self, position):
     ability = None

@@ -25,6 +25,31 @@ with description("Starport") as self:
     with it("can be instantiated"):
       expect(self.structure).to(be_a(Starport))
 
+  with description("Abilities") as self:
+    with before.each: # pylint: disable=no-member
+      self.model = StarportModel()
+      self.unit = doubles.InstanceDouble('sc2.unit.Unit')
+      doubles.allow(self.unit).tag.and_return(112233)
+      doubles.allow(self.unit).type_id.and_return(UnitTypeId.STARPORT)
+      doubles.allow(self.unit).position.and_return(Point2((50.0, 50.0)))
+      self.structure = Starport(self.unit, self.model)
+
+    with description("Landing") as self:
+      with it("has a method for landing"):
+        expect(self.structure.land).to(be_callable)
+
+    with description("Lifting") as self:
+      with it("has a method for lifting"):
+        expect(self.structure.lift).to(be_callable)
+
+    with description("Building a reactor") as self:
+      with it("has a method for building a reactor"):
+        expect(self.structure.build_reactor).to(be_callable)
+
+    with description("Building a techlab") as self:
+      with it("has a method for building a techlab"):
+        expect(self.structure.build_techlab).to(be_callable)
+
   with description("Upgrades") as self:
     with before.each: # pylint: disable=no-member
       doubles.allow(self.unit).add_on_tag.and_return(999)

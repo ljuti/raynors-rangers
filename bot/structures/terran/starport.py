@@ -10,13 +10,8 @@ from sc2.constants import UpgradeId
 
 class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
   def __init__(self, unit: Unit, model: StarportModel):
-    ProductionStructure.__init__(self, unit)
+    super().__init__(unit, model)
     self.model = model
-
-    Landable.__init__(self, unit)
-    Liftable.__init__(self, unit)
-    Reactorable.__init__(self, unit)
-    Techlabable.__init__(self, unit)
 
   def research_banshee_cloak(self, game):
     if game.can_afford(UpgradeId.BANSHEECLOAK) and self.has_techlab(game):

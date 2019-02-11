@@ -1,14 +1,18 @@
 from sc2.constants import UnitTypeId, AbilityId
 from sc2.unit_command import UnitCommand
+from sc2.unit import Unit
+
+from bot.command_bus import CommandBus
 
 class Liftable:
-  def __init__(self, unit):
+  def __init__(self, unit: Unit, model):
     self.unit = unit
+    self.model = model
 
-  def lift(self, game, immediately=True):
+  def lift(self, command_bus: CommandBus, immediately=True):
     if immediately:
       self.unit.orders.clear()
-    game.command_bus.queue(self.lift_action(self.unit.type_id))
+    return command_bus.queue(self.lift_action(self.unit.type_id))
 
   def lift_action(self, type_id) -> UnitCommand:
     action = None
