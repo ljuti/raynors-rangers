@@ -4,6 +4,8 @@ from sc2.position import Point2
 from sc2.unit import Unit
 from sc2.constants import AbilityId
 
+from bot.service_hub import ServiceHub
+
 class Loadable:
   def __init__(self, unit: Unit, model):
     self.unit = unit

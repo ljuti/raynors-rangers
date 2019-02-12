@@ -2,6 +2,7 @@ from bot.units.terran.abilities.loadable import Loadable
 from bot.units.models.terran.medivac import MedivacModel
 from bot.units.models.terran.siege_tank import SiegeTankModel
 
+from bot.service_hub import ServiceHub
 from bot.command_bus import CommandBus
 
 from mamba import description, context, it, shared_context, before, after
@@ -10,10 +11,15 @@ import doubles
 
 from sc2.constants import UnitTypeId
 
+service_hub = None
+
 with description("Loadable") as self:
   with before.each: # pylint: disable=no-member
     self.game = doubles.InstanceDouble('bot.MyBot')
     self.command_bus = CommandBus(self.game)
+    global service_hub
+    service_hub = ServiceHub(self.game)
+    service_hub.register(self.command_bus)
 
   with after.each: # pylint: disable=no-member
     doubles.verify

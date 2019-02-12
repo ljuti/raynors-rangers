@@ -1,5 +1,7 @@
+from sc2.unit import Unit
+
 class UnitProperties:
-  def __init__(self, model):
+  def __init__(self, unit: Unit, model):
     self.model = model
 
   @property
