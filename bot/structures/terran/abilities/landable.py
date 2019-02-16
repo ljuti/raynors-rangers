@@ -15,7 +15,7 @@ class Landable:
       """ TODO/FIXME: Should get the landing position from location service """
       position = self.get_landing_position(game)
 
-    command_bus.queue(self.land_action(self.landing_position))
+    return command_bus.queue(self.land_action(self.landing_position))
 
   def land_action(self, position):
     ability = None

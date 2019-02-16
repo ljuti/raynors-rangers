@@ -31,8 +31,6 @@ class MyBot(sc2.BotAI):
 
     async def main_loop(self, game):
         if game.time % 10 == 0:
-            game_info = await self._client.get_game_info()
-            game_info.map_ramps = self._game_info._find_ramps()
             scv = self.workers.random
             await self.uplink.relay(scv.build(UnitTypeId.BARRACKS, self.start_location))
 
