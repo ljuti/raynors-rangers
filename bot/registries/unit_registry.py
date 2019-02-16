@@ -35,6 +35,7 @@ from bot.units.models.terran.thor import ThorModel
 from bot.units.models.terran.viking import VikingModel
 from bot.units.models.terran.widow_mine import WidowMineModel
 
+from sc2.unit import Unit
 from sc2.constants import UnitTypeId
 
 class UnitRegistry(BaseRegistry):

@@ -5,7 +5,7 @@ from sc2.unit import Unit
 from sc2.constants import AbilityId, UpgradeId
 
 class GhostAcademy(TechStructure):
-  def __init__(self, unit: Unit, model: GhostAcademy):
+  def __init__(self, unit: Unit, model: GhostAcademyModel):
     TechStructure.__init__(self, unit)
     self.model = model
 

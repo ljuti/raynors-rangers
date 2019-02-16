@@ -2,6 +2,7 @@ from bot.structures.terran.starport import Starport
 from bot.structures.models.terran.starport import StarportModel
 
 from bot.command_bus import CommandBus
+from bot.registries.structure_registry import StructureRegistry
 
 from sc2.units import Units
 from sc2.unit import Unit
@@ -52,13 +53,19 @@ with description("Starport") as self:
 
   with description("Upgrades") as self:
     with before.each: # pylint: disable=no-member
+      self.registry = StructureRegistry()
       doubles.allow(self.unit).add_on_tag.and_return(999)
       self.techlab_unit = doubles.InstanceDouble('sc2.unit.Unit')
       doubles.allow(self.techlab_unit).type_id.and_return(UnitTypeId.STARPORTTECHLAB)
+      doubles.allow(self.techlab_unit).tag.and_return(999)
+      doubles.allow(self.techlab_unit).position.and_return(Point2((10.0, 10.0)))
       unit_list = doubles.InstanceDouble('sc2.units.Units')
       doubles.allow(unit_list).find_by_tag(999).and_return(self.techlab_unit)
 
-      self.game = doubles.InstanceDouble('sc2.bot_ai.BotAI', units=unit_list, command_bus=CommandBus(self))
+      self.registry.add(self.unit)
+      self.registry.add(self.techlab_unit)
+
+      self.game = doubles.InstanceDouble('sc2.bot_ai.BotAI', units=unit_list, command_bus=CommandBus(self), structures=self.registry)
 
     with description("Banshee cloak"):
       with it("can queue Banshee cloak research"):

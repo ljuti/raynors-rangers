@@ -15,6 +15,9 @@ class BaseRegistry():
       return self.get_with_tag(keys[0])
     return None
 
+  def get_designated(self, designation):
+    return self.get_with_designation(designation)
+
   def get_with_position(self, position):
     keys = [k for k in self.objects.keys() if self.objects[k].get("position", None) == position]
     if keys:

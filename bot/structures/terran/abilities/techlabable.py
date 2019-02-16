@@ -21,8 +21,9 @@ class Techlabable:
     elif type_id == UnitTypeId.STARPORT:
       return UnitTypeId.STARPORTTECHLAB
 
-  def has_techlab(self, game) -> bool:
+  def has_techlab(self, registry) -> bool:
     return bool(
       self.unit.add_on_tag != 0
-      and game.units.find_by_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSTECHLAB, UnitTypeId.FACTORYTECHLAB, UnitTypeId.STARPORTTECHLAB]
+      and registry.get_with_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSTECHLAB, UnitTypeId.FACTORYTECHLAB, UnitTypeId.STARPORTTECHLAB]
+      # and game.units.find_by_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSTECHLAB, UnitTypeId.FACTORYTECHLAB, UnitTypeId.STARPORTTECHLAB]
     )

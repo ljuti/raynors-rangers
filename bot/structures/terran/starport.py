@@ -14,19 +14,19 @@ class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable
     self.model = model
 
   def research_banshee_cloak(self, game):
-    if game.can_afford(UpgradeId.BANSHEECLOAK) and self.has_techlab(game):
+    if game.can_afford(UpgradeId.BANSHEECLOAK) and self.has_techlab(game.structures):
       techlab = game.units.find_by_tag(self.unit.add_on_tag)
       return game.command_bus.queue(techlab.research(UpgradeId.BANSHEECLOAK), silent=False)
     return False
 
   def research_banshee_speed(self, game):
-    if game.can_afford(UpgradeId.BANSHEESPEED) and self.has_techlab(game):
+    if game.can_afford(UpgradeId.BANSHEESPEED) and self.has_techlab(game.structures):
       techlab = game.units.find_by_tag(self.unit.add_on_tag)
       return game.command_bus.queue(techlab.research(UpgradeId.BANSHEESPEED), silent=False)
     return False
 
   def research_advanced_ballistics(self, game):
-    if game.can_afford(UpgradeId.LIBERATORAGRANGEUPGRADE) and self.has_techlab(game):
+    if game.can_afford(UpgradeId.LIBERATORAGRANGEUPGRADE) and self.has_techlab(game.structures):
       techlab = game.units.find_by_tag(self.unit.add_on_tag)
       return game.command_bus.queue(techlab.research(UpgradeId.LIBERATORAGRANGEUPGRADE), silent=False)
     return False

@@ -22,8 +22,8 @@ class Reactorable():
     elif type_id == UnitTypeId.STARPORT:
       return UnitTypeId.STARPORTREACTOR
 
-  def has_reactor(self, game) -> bool:
+  def has_reactor(self, registry) -> bool:
     return bool(
       self.unit.add_on_tag != 0
-      and game.units.find_by_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSREACTOR, UnitTypeId.FACTORYREACTOR, UnitTypeId.STARPORTREACTOR]
+      and registry.get_with_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSREACTOR, UnitTypeId.FACTORYREACTOR, UnitTypeId.STARPORTREACTOR]
     )
