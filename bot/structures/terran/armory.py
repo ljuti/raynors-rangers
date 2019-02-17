@@ -5,8 +5,8 @@ from sc2.unit import Unit
 from sc2.constants import UpgradeId
 
 class Armory(TechStructure):
-  def __init__(self, unit: Unit, model: ArmoryModel):
-    TechStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: ArmoryModel, service_hub):
+    super(TechStructure, self).__init__(unit, service_hub)
     self.model = model
 
   def research_mech_weapons(self, game):

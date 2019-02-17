@@ -17,7 +17,7 @@ with description("CommandCenter") as self:
       doubles.allow(self.unit).tag.and_return(112233)
       doubles.allow(self.unit).type_id.and_return(UnitTypeId.COMMANDCENTER)
       doubles.allow(self.unit).position.and_return(Point2((50.0, 50.0)))
-      self.structure = CommandCenter(self.unit, self.model)
+      self.structure = CommandCenter(self.unit, self.model, None)
 
     with it("can be instantiated"):
       expect(self.structure).to(be_a(CommandCenter))
@@ -29,7 +29,7 @@ with description("CommandCenter") as self:
       doubles.allow(self.unit).tag.and_return(112233)
       doubles.allow(self.unit).type_id.and_return(UnitTypeId.COMMANDCENTER)
       doubles.allow(self.unit).position.and_return(Point2((50.0, 50.0)))
-      self.structure = CommandCenter(self.unit, self.model)
+      self.structure = CommandCenter(self.unit, self.model, None)
 
     with it("has a landing ability"):
       expect(self.structure.land).to(be_callable)

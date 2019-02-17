@@ -9,8 +9,8 @@ from sc2.unit import Unit
 from sc2.constants import AbilityId, UpgradeId, UnitTypeId
 
 class Factory(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
-  def __init__(self, unit: Unit, model: FactoryModel):
-    super().__init__(unit, model)
+  def __init__(self, unit: Unit, model: FactoryModel, service_hub):
+    super().__init__(unit, model, service_hub)
     self.model = model
     self.command_bus = None
     self.structures = None

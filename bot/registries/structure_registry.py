@@ -37,10 +37,11 @@ from sc2.constants import UnitTypeId
 from sc2.position import Point2
 
 class StructureRegistry(BaseRegistry):
-  def __init__(self):
+  def __init__(self, service_hub=None):
     super().__init__()
     self.registrations = defaultdict(dict)
     self.load_models_and_klasses()
+    self.service_hub = service_hub
 
   def add(self, unit, designation=None):
     # if self.get_with_tag(unit.tag):
@@ -70,7 +71,7 @@ class StructureRegistry(BaseRegistry):
   def initialize_structure(self, unit):
     model = self.model_for(unit.type_id)
     klass = self.klass_for(unit.type_id)
-    return klass(unit, model)
+    return klass(unit, model, self.service_hub)
 
   def model_for(self, type_id):
     return self.models[type_id]

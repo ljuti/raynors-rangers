@@ -4,8 +4,8 @@ from bot.structures.models.terran.missile_turret import MissileTurretModel
 from sc2.unit import Unit
 
 class MissileTurret(BaseStructure):
-  def __init__(self, unit: Unit, model: MissileTurretModel):
-    BaseStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: MissileTurretModel, service_hub):
+    BaseStructure.__init__(self, unit, service_hub)
     self.model = model
 
   async def update(self, game, unit):

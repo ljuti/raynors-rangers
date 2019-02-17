@@ -5,8 +5,8 @@ from sc2.unit import Unit
 from sc2.constants import UpgradeId
 
 class FusionCore(TechStructure):
-  def __init__(self, unit: Unit, model: FusionCoreModel):
-    TechStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: FusionCoreModel, service_hub):
+    TechStructure.__init__(self, unit, service_hub)
     self.model = model
 
   def research_yamato(self, game):

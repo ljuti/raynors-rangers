@@ -1,8 +1,8 @@
 from bot.structures.terran.base_structure import BaseStructure
 
 class Bunker(BaseStructure):
-  def __init__(self, unit, model):
-    BaseStructure.__init__(self, unit)
+  def __init__(self, unit, model, service_hub):
+    BaseStructure.__init__(self, unit, service_hub)
     self.model = model
 
   async def update(self, game, unit):

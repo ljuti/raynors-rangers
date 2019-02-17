@@ -5,8 +5,8 @@ from sc2.unit import Unit
 from sc2.constants import UnitTypeId
 
 class Refinery(BaseStructure):
-  def __init__(self, unit: Unit, model: RefineryModel):
-    BaseStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: RefineryModel, service_hub):
+    super(Refinery, self).__init__(unit, service_hub)
     self.model = model
     self.command_center = None
     self.geyser = None

@@ -5,12 +5,14 @@ from bot.structures.terran.abilities.liftable import Liftable
 from bot.structures.terran.abilities.reactorable import Reactorable
 from bot.structures.terran.abilities.techlabable import Techlabable
 
+from bot.service_hub import ServiceHub
+
 from sc2.unit import Unit
 from sc2.constants import UnitTypeId, UpgradeId
 
 class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
-  def __init__(self, unit: Unit, model: StarportModel):
-    super().__init__(unit, model)
+  def __init__(self, unit: Unit, model: StarportModel, service_hub=None):
+    super().__init__(unit, model, service_hub)
     self.model = model
     self.command_bus = None
     self.structures = None

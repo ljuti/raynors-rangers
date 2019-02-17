@@ -1,13 +1,16 @@
 from bot.structures.terran.tech_structure import TechStructure
 from bot.structures.models.terran.engineering_bay import EngineeringBayModel
 
+from bot.service_hub import ServiceHub
+
 from sc2.unit import Unit
 from sc2.constants import UnitTypeId, UpgradeId
 
 class EngineeringBay(TechStructure):
-  def __init__(self, unit: Unit, model: EngineeringBayModel):
-    TechStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: EngineeringBayModel, service_hub=None):
+    TechStructure.__init__(self, unit, service_hub)
     self.model = model
+    self.structures = None
 
   def research_infantry_weapons(self, game):
     if game.units(UnitTypeId.ARMORY):

@@ -1,5 +1,7 @@
 import abc
 
+from bot.service_hub import ServiceHub
+
 from sc2.unit import Unit
 from sc2.position import Point2
 from sc2.constants import AbilityId
@@ -7,12 +9,13 @@ from sc2.constants import AbilityId
 class BaseStructure():
   __metaclass__ = abc.ABCMeta
 
-  def __init__(self, unit: Unit):
+  def __init__(self, unit: Unit, service_hub=None):
     self.unit = unit
     self.tag = unit.tag
     self.type_id = unit.type_id
     self.designation = None
     self.saved_position = unit.position
+    self.service_hub = service_hub
 
   @abc.abstractmethod
   def post_construction_complete(self, game):

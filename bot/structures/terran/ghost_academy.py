@@ -5,8 +5,8 @@ from sc2.unit import Unit
 from sc2.constants import AbilityId, UpgradeId
 
 class GhostAcademy(TechStructure):
-  def __init__(self, unit: Unit, model: GhostAcademyModel):
-    TechStructure.__init__(self, unit)
+  def __init__(self, unit: Unit, model: GhostAcademyModel, service_hub):
+    TechStructure.__init__(self, unit, service_hub)
     self.model = model
 
   def research_cloak(self, game):
