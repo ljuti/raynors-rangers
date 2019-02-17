@@ -14,18 +14,23 @@ class Barracks(ProductionStructure, Landable, Liftable, Reactorable, Techlabable
     self.unit = unit
     self.model = model
     self.command_bus = None
+    self.structures = None
 
-  def train_marine(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.MARINE))
+  def train_marine(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.MARINE, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MARINE, queue=queue))
 
-  def train_marauder(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.MARAUDER))
+  def train_marauder(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MARAUDER, queue=queue))
 
-  def train_reaper(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.REAPER))
+  def train_reaper(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.REAPER, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.REAPER, queue=queue))
 
-  def train_ghost(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.GHOST))
+  def train_ghost(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.GHOST, queue=queue))
 
   def research_stim(self, game):
     if game.can_afford(UpgradeId.STIMPACK) and self.has_techlab(game):

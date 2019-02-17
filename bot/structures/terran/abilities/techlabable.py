@@ -25,5 +25,4 @@ class Techlabable:
     return bool(
       self.unit.add_on_tag != 0
       and registry.get_with_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSTECHLAB, UnitTypeId.FACTORYTECHLAB, UnitTypeId.STARPORTTECHLAB]
-      # and game.units.find_by_tag(self.unit.add_on_tag).type_id in [UnitTypeId.BARRACKSTECHLAB, UnitTypeId.FACTORYTECHLAB, UnitTypeId.STARPORTTECHLAB]
     )

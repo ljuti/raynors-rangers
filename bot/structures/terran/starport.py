@@ -13,21 +13,26 @@ class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable
     super().__init__(unit, model)
     self.model = model
     self.command_bus = None
+    self.structures = None
 
-  def train_medivac(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC))
+  def train_medivac(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC, queue=queue))
 
-  def train_banshee(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.BANSHEE))
+  def train_banshee(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.BANSHEE, queue=True))
 
-  def train_raven(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.RAVEN))
+  def train_raven(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.RAVEN, queue=True))
 
-  def train_viking(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.VIKING))
+  def train_viking(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.VIKING, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.VIKING, queue=queue))
 
-  def train_battlecruiser(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.BATTLECRUISER))
+  def train_battlecruiser(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.BATTLECRUISER, queue=queue))
 
   def research_banshee_cloak(self, game):
     if game.can_afford(UpgradeId.BANSHEECLOAK) and self.has_techlab(game.structures):

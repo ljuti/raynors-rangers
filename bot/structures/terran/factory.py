@@ -13,21 +13,26 @@ class Factory(ProductionStructure, Landable, Liftable, Reactorable, Techlabable)
     super().__init__(unit, model)
     self.model = model
     self.command_bus = None
+    self.structures = None
 
-  def train_hellion(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.HELLION))
+  def train_hellion(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.HELLION, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.HELLION, queue=queue))
 
-  def train_cyclone(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.CYCLONE))
+  def train_cyclone(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.CYCLONE, queue=queue))
 
-  def train_siege_tank(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.SIEGETANK))
+  def train_siege_tank(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.SIEGETANK, queue=queue))
 
-  def train_thor(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.THOR))
+  def train_thor(self, queue=True):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.THOR, queue=queue))
 
-  def train_widow_mine(self):
-    return self.command_bus.queue(self.unit.train(UnitTypeId.WIDOWMINE))
+  def train_widow_mine(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.WIDOWMINE, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.WIDOWMINE, queue=queue))
 
   def research_blue_flame(self, game):
     if game.can_afford(UpgradeId.HELLIONCAMPAIGNINFERNALPREIGNITER) and self.has_techlab(game):
