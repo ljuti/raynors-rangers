@@ -34,6 +34,7 @@ from collections import defaultdict
 
 from sc2.unit import Unit
 from sc2.constants import UnitTypeId
+from sc2.position import Point2
 
 class StructureRegistry(BaseRegistry):
   def __init__(self):

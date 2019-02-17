@@ -10,8 +10,24 @@ from sc2.constants import AbilityId, UpgradeId, UnitTypeId
 
 class Factory(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
   def __init__(self, unit: Unit, model: FactoryModel):
-    ProductionStructure.__init__(self, unit)
+    super().__init__(unit, model)
     self.model = model
+    self.command_bus = None
+
+  def train_hellion(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.HELLION))
+
+  def train_cyclone(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.CYCLONE))
+
+  def train_siege_tank(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.SIEGETANK))
+
+  def train_thor(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.THOR))
+
+  def train_widow_mine(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.WIDOWMINE))
 
   def research_blue_flame(self, game):
     if game.can_afford(UpgradeId.HELLIONCAMPAIGNINFERNALPREIGNITER) and self.has_techlab(game):

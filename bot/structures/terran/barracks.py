@@ -6,13 +6,26 @@ from bot.structures.terran.abilities.techlabable import Techlabable
 from bot.structures.models.terran.barracks import BarracksModel
 
 from sc2.unit import Unit
-from sc2.constants import UpgradeId
+from sc2.constants import UnitTypeId, UpgradeId
 
 class Barracks(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
   def __init__(self, unit: Unit, model: BarracksModel):
     super().__init__(unit, model)
     self.unit = unit
     self.model = model
+    self.command_bus = None
+
+  def train_marine(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MARINE))
+
+  def train_marauder(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MARAUDER))
+
+  def train_reaper(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.REAPER))
+
+  def train_ghost(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.GHOST))
 
   def research_stim(self, game):
     if game.can_afford(UpgradeId.STIMPACK) and self.has_techlab(game):

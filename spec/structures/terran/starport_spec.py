@@ -102,3 +102,24 @@ with description("Starport") as self:
         doubles.allow(self.game).can_afford(UpgradeId.LIBERATORAGRANGEUPGRADE).and_return(False)
         expect(self.structure.research_advanced_ballistics).to(be_callable)
         expect(self.structure.research_advanced_ballistics(self.game)).to(be_false)
+
+  with description("Training units") as self:
+    with description("Medivacs") as self:
+      with it("can train medivacs"):
+        expect(self.structure.train_medivac).to(be_callable)
+
+    with description("Banshees") as self:
+      with it("can train banshees"):
+        expect(self.structure.train_banshee).to(be_callable)
+
+    with description("Ravens") as self:
+      with it("can train ravens"):
+        expect(self.structure.train_raven).to(be_callable)
+
+    with description("Vikings") as self:
+      with it("can train vikings"):
+        expect(self.structure.train_viking).to(be_callable)
+
+    with description("Battlecruisers") as self:
+      with it("can train battlecruisers"):
+        expect(self.structure.train_battlecruiser).to(be_callable)

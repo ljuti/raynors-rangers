@@ -6,12 +6,28 @@ from bot.structures.terran.abilities.reactorable import Reactorable
 from bot.structures.terran.abilities.techlabable import Techlabable
 
 from sc2.unit import Unit
-from sc2.constants import UpgradeId
+from sc2.constants import UnitTypeId, UpgradeId
 
 class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable):
   def __init__(self, unit: Unit, model: StarportModel):
     super().__init__(unit, model)
     self.model = model
+    self.command_bus = None
+
+  def train_medivac(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC))
+
+  def train_banshee(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.BANSHEE))
+
+  def train_raven(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.RAVEN))
+
+  def train_viking(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.VIKING))
+
+  def train_battlecruiser(self):
+    return self.command_bus.queue(self.unit.train(UnitTypeId.BATTLECRUISER))
 
   def research_banshee_cloak(self, game):
     if game.can_afford(UpgradeId.BANSHEECLOAK) and self.has_techlab(game.structures):
