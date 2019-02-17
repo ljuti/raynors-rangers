@@ -12,6 +12,10 @@ class BaseNode(object):
     self.id = str(uuid.uuid4())
     self.title = self.title or self.__class__.__name__
 
+  @property
+  def name(self):
+    return self.__class__.__name__
+
   def _execute(self, tick: Tick):
     self._enter(tick)
 
