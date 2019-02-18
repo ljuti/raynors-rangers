@@ -79,7 +79,6 @@ with description("BuildStructureAction") as self:
       status = self.action._execute(self.tick)
       expect(status).to(equal(BTreeStatus.RUNNING))
       expect(self.command_bus.actions).not_to(be_empty)
-      print(self.tick.blackboard._tree_memory)
 
     with it("keeps running when an SCV is building the structure"):
       expect(self.action).to(be_a(BuildStructureAction))
@@ -95,7 +94,6 @@ with description("BuildStructureAction") as self:
 
       status = self.action._execute(self.tick)
       expect(status).to(equal(BTreeStatus.RUNNING))
-      print(self.blackboard._tree_memory)
 
     with it("returns success when the SCV has finished building the structure"):
       expect(self.action).to(be_a(BuildStructureAction))
@@ -123,3 +121,12 @@ with description("BuildStructureAction") as self:
 
       status = self.action._execute(self.tick)
       expect(status).to(equal(BTreeStatus.SUCCESS))
+
+    with it("fails if the structure cannot be afforded"):
+      expect(self.action).to(be_a(BuildStructureAction))
+
+      doubles.allow(self.commander).can_afford.and_return(False)
+
+      status = self.action._execute(self.tick)
+      expect(status).to(equal(BTreeStatus.FAILURE))
+      expect(self.command_bus.actions).to(be_empty)
