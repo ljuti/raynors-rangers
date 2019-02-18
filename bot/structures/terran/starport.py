@@ -5,8 +5,6 @@ from bot.structures.terran.abilities.liftable import Liftable
 from bot.structures.terran.abilities.reactorable import Reactorable
 from bot.structures.terran.abilities.techlabable import Techlabable
 
-from bot.service_hub import ServiceHub
-
 from sc2.unit import Unit
 from sc2.constants import UnitTypeId, UpgradeId
 

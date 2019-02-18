@@ -1,7 +1,5 @@
 import abc
 
-from bot.service_hub import ServiceHub
-
 from sc2.unit import Unit
 from sc2.position import Point2
 from sc2.constants import AbilityId

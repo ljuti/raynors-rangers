@@ -1,8 +1,6 @@
 from bot.structures.terran.tech_structure import TechStructure
 from bot.structures.models.terran.engineering_bay import EngineeringBayModel
 
-from bot.service_hub import ServiceHub
-
 from sc2.unit import Unit
 from sc2.constants import UnitTypeId, UpgradeId
 
