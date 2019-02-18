@@ -21,7 +21,7 @@ class MyBot(sc2.BotAI):
 
     async def on_step(self, iteration):
         if not iteration:
-            await self.uplink.connect()
+            # await self.uplink.connect()
             self.pre_game_setup(self)
 
         if iteration == 0:
@@ -32,7 +32,16 @@ class MyBot(sc2.BotAI):
     async def main_loop(self, game):
         if game.time % 10 == 0:
             scv = self.workers.random
+
+            if self.can_afford(UnitTypeId.SUPPLYDEPOT) and self.already_pending(UnitTypeId.SUPPLYDEPOT) < 1:
+                placement = await self.find_placement(UnitTypeId.SUPPLYDEPOT, near=self.start_location)
+                if placement:
+                    await self.do(scv.build(UnitTypeId.SUPPLYDEPOT, placement))
+
             await self.uplink.relay(scv.build(UnitTypeId.BARRACKS, self.start_location))
+
+            for scv in self.workers:
+                print(scv.orders)
 
         if game.time % 15 == 0:
             self.print_ramps(game)

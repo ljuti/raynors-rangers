@@ -91,6 +91,10 @@ class UnitRegistry(BaseRegistry):
     klass = self.klass_for(unit.type_id)
     return klass(unit, model)
 
+  @property
+  def scvs(self) -> list([SCVUnit]):
+    return list(self.get_with_unit_type(UnitTypeId.SCV))
+
   def marines(self) -> list:
     return list(self.get_with_unit_type(UnitTypeId.MARINE))
 
