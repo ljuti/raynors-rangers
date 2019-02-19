@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from bot.command_bus import CommandBus
+from bot.data_store import DataStore
 from bot.uplink.uplink import Uplink
 
 import sc2
@@ -31,6 +32,7 @@ class MyBot(sc2.BotAI):
 
     async def main_loop(self, game):
         if game.time % 10 == 0:
+            print(self.data_store.locations.ordered_expansions)
             scv = self.workers.random
 
             if self.can_afford(UnitTypeId.SUPPLYDEPOT) and self.already_pending(UnitTypeId.SUPPLYDEPOT) < 1:
@@ -47,7 +49,8 @@ class MyBot(sc2.BotAI):
             self.print_ramps(game)
 
     def pre_game_setup(self, game):
-        pass
+        self.data_store = DataStore(self)
+        self.data_store.locations.prepare_expansions(self.expansion_locations)
 
     def iteration_zero(self, game):
         self.print_ramps(game)
