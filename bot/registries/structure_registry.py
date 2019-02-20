@@ -13,6 +13,7 @@ from bot.structures.models.terran.reactor import ReactorModel
 from bot.structures.models.terran.refinery import RefineryModel
 from bot.structures.models.terran.sensor_tower import SensorTowerModel
 from bot.structures.models.terran.starport import StarportModel
+from bot.structures.models.terran.supply_depot import SupplyDepotModel
 from bot.structures.models.terran.techlab import TechlabModel
 
 from bot.structures.terran.armory import Armory
@@ -28,6 +29,7 @@ from bot.structures.terran.reactor import Reactor
 from bot.structures.terran.refinery import Refinery
 from bot.structures.terran.sensor_tower import SensorTower
 from bot.structures.terran.starport import Starport
+from bot.structures.terran.supply_depot import SupplyDepot
 from bot.structures.terran.techlab import Techlab
 
 from collections import defaultdict
@@ -61,6 +63,9 @@ class StructureRegistry(BaseRegistry):
       )
 
     return True
+
+  def complete(self, unit: Unit):
+    pass
 
   def resolve_position_for(self, unit):
     if unit.type_id == UnitTypeId.SUPPLYDEPOT:
@@ -97,6 +102,7 @@ class StructureRegistry(BaseRegistry):
       UnitTypeId.REFINERY: RefineryModel(),
       UnitTypeId.SENSORTOWER: SensorTowerModel(),
       UnitTypeId.STARPORT: StarportModel(),
+      UnitTypeId.SUPPLYDEPOT: SupplyDepotModel(),
       UnitTypeId.TECHLAB: TechlabModel(),
       UnitTypeId.BARRACKSTECHLAB: TechlabModel(),
       UnitTypeId.FACTORYTECHLAB: TechlabModel(),
@@ -120,6 +126,7 @@ class StructureRegistry(BaseRegistry):
       UnitTypeId.REFINERY: Refinery,
       UnitTypeId.SENSORTOWER: SensorTower,
       UnitTypeId.STARPORT: Starport,
+      UnitTypeId.SUPPLYDEPOT: SupplyDepot,
       UnitTypeId.TECHLAB: Techlab,
       UnitTypeId.BARRACKSTECHLAB: Techlab,
       UnitTypeId.FACTORYTECHLAB: Techlab,

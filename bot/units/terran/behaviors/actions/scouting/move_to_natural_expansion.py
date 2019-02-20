@@ -15,14 +15,14 @@ class MoveToNaturalExpansion(Action):
       if distance > 5:
         return BTreeStatus.RUNNING
       elif distance <= 5:
-        print("Natural scouted")
+        tick.blackboard.set('natural_scouted', True, tick.tree.id)
         return BTreeStatus.SUCCESS
     elif distance > 5:
       status = actor.move_to(natural_expansion)
       if status:
         return BTreeStatus.RUNNING
     elif distance < 5:
-      print("Natural scouted")
+      tick.blackboard.set('natural_scouted', True, tick.tree.id)
       return BTreeStatus.SUCCESS
 
     return BTreeStatus.FAILURE
