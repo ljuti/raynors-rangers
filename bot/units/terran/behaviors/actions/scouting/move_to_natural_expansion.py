@@ -15,12 +15,14 @@ class MoveToNaturalExpansion(Action):
       if distance > 5:
         return BTreeStatus.RUNNING
       elif distance <= 5:
+        print("Natural scouted")
         return BTreeStatus.SUCCESS
     elif distance > 5:
       status = actor.move_to(natural_expansion)
       if status:
         return BTreeStatus.RUNNING
     elif distance < 5:
+      print("Natural scouted")
       return BTreeStatus.SUCCESS
 
     return BTreeStatus.FAILURE
@@ -28,5 +30,5 @@ class MoveToNaturalExpansion(Action):
   def ordered_to_move_to_natural(self, actor, position) -> bool:
     return (
       actor.unit.orders
-      and actor.unit.orders[0].target == position
+      and actor.unit.order_target == position
     )

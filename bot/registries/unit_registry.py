@@ -39,9 +39,10 @@ from sc2.unit import Unit
 from sc2.constants import UnitTypeId
 
 class UnitRegistry(BaseRegistry):
-  def __init__(self, game):
+  def __init__(self, game, service_hub=None):
     super().__init__()
     self.game = game
+    self.services = service_hub
     self.load_models_and_klasses()
 
   def get_with_tags(self, tags: list) -> list:
@@ -55,7 +56,7 @@ class UnitRegistry(BaseRegistry):
     for unit in self.game.units():
       unit_obj = self.get_with_tag(unit.tag)
       if unit_obj:
-        unit_obj.make_decision(self.game, unit)
+        unit_obj.update(self.game, unit)
 
   def get_with_unit_type(self, unit_type) -> list:
     keys = [k for k in self.objects.keys() if self.objects[k].get("type", None) == unit_type]
@@ -89,7 +90,7 @@ class UnitRegistry(BaseRegistry):
   def initialize_unit(self, unit) -> BaseUnit:
     model = self.model_for(unit.type_id)
     klass = self.klass_for(unit.type_id)
-    return klass(unit, model)
+    return klass(unit, model, self.services)
 
   @property
   def scvs(self) -> list([SCVUnit]):

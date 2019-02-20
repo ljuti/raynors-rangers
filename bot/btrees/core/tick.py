@@ -19,7 +19,8 @@ class Tick(object):
     pass
 
   def _close_node(self, node):
-    self._open_nodes.pop()
+    if self._open_nodes:
+      self._open_nodes.pop()
 
   def _exit_node(self, node):
     pass
