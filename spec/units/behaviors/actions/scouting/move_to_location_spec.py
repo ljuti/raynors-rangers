@@ -1,4 +1,4 @@
-from bot.units.terran.behaviors.actions.scouting.move_to_natural_expansion import MoveToNaturalExpansion
+from bot.units.terran.behaviors.actions.scouting.move_to_location import MoveToLocation
 
 from bot.btrees.core.behavior_tree import BehaviorTree
 from bot.btrees.core.blackboard import Blackboard
@@ -15,17 +15,17 @@ from bot.units.models.terran.scv import SCVModel
 from sc2.constants import UnitTypeId
 from sc2.position import Point2
 
-with description("MoveToNaturalExpansion"):
+with description("MoveToLocation"):
   with after.each: # pylint: disable=no-member
     doubles.verify
     doubles.teardown
 
   with description("Initialization") as self:
     with before.each: # pylint: disable=no-member
-      self.condition = MoveToNaturalExpansion()
+      self.condition = MoveToLocation()
 
     with it("can be instantiated"):
-      expect(self.condition).to(be_a(MoveToNaturalExpansion))
+      expect(self.condition).to(be_a(MoveToLocation))
 
   with description("Running the action") as self:
     with before.each: # pylint: disable=no-member
@@ -38,17 +38,17 @@ with description("MoveToNaturalExpansion"):
       self.blackboard = Blackboard()
       self.tree = BehaviorTree()
       self.tick = Tick(target=self.scv, tree=self.tree, blackboard=self.blackboard)
-      self.action = MoveToNaturalExpansion()
+      self.action = MoveToLocation()
 
     with it("will return RUNNING if the scout is moving to the natural expansion"):
-      self.tick.blackboard.set('natural_position', Point2((20.0, 20.0)), self.tick.tree.id)
+      self.tick.blackboard.set('currently_scouting', Point2((20.0, 20.0)), self.tick.tree.id)
       doubles.allow(self.scv_unit).orders.and_return([doubles.InstanceDouble('sc2.unit.UnitOrder', target=Point2((20.0, 20.0)))])
       doubles.allow(self.scv_unit).order_target.and_return(Point2((20.0, 20.0)))
       status = self.action._execute(self.tick)
       expect(status).to(equal(BTreeStatus.RUNNING))
 
     with it("will return SUCCESS if the scout has arrived to the natural expansion"):
-      self.tick.blackboard.set('natural_position', Point2((20.0, 20.0)), self.tick.tree.id)
+      self.tick.blackboard.set('currently_scouting', Point2((20.0, 20.0)), self.tick.tree.id)
       doubles.allow(self.scv_unit).orders.and_return([doubles.InstanceDouble('sc2.unit.UnitOrder', target=Point2((20.0, 20.0)))])
       doubles.allow(self.scv_unit).position.and_return(Point2((19.0, 19.0)))
       doubles.allow(self.scv_unit).order_target.and_return(Point2((20.0, 20.0)))

@@ -47,7 +47,7 @@ class MyBot(sc2.BotAI):
         self.structures.add(unit, self)
 
     async def on_building_construction_complete(self, unit):
-        self.structures.complete(unit, self)
+        self.structures.complete(unit)
 
     async def on_step(self, iteration):
         if not iteration:
@@ -79,9 +79,6 @@ class MyBot(sc2.BotAI):
 
             await self.uplink.relay(scv.build(UnitTypeId.BARRACKS, self.start_location))
 
-            for scv in self.workers:
-                print(scv.orders)
-
         if game.time % 15 == 0:
             self.print_ramps(game)
 
@@ -90,7 +87,9 @@ class MyBot(sc2.BotAI):
     def pre_game_setup(self, game):
         self.data_store = DataStore(self)
         self.data_store.locations.main = self.start_location
+        self.data_store.locations.map_center = self.game_info.map_center
         self.data_store.locations.prepare_expansions(self.expansion_locations)
+        self.data_store.locations.prepare_proxy_locations()
         self.service_hub.register(self.data_store.locations)
         self.scouting_scv = None
 

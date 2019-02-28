@@ -1,4 +1,4 @@
-from bot.units.terran.behaviors.composites.scouting.scout_natural_expansion import ScoutNaturalExpansion
+from bot.units.terran.behaviors.composites.scouting.scout_for_proxies import ScoutForProxies
 
 from bot.btrees.core.behavior_tree import BehaviorTree
 from bot.btrees.core.tick import Tick
@@ -16,10 +16,12 @@ import doubles
 from bot.service_hub import ServiceHub
 from bot.command_bus import CommandBus
 
+from collections import deque
+
 from sc2.position import Point2
 from sc2.constants import UnitTypeId
 
-with description("ScoutNaturalExpansion") as self:
+with description("ScoutForProxies") as self:
   with before.each: # pylint: disable=no-member
     self.game = doubles.InstanceDouble('bot.MyBot', service_hub=ServiceHub(self))
     self.game.service_hub.register(CommandBus(self.game))
@@ -32,16 +34,22 @@ with description("ScoutNaturalExpansion") as self:
     with before.each: # pylint: disable=no-member
       self.locations = LocationData()
       self.locations.natural = Point2((50.0, 50.0))
-      self.sequence = ScoutNaturalExpansion(self.locations)
+      self.locations.map_center = Point2((100.0, 100.0))
+      self.locations.ordered_expansions = [None, None, Point2((25.0, 25.0)), Point2((35.0, 35.0))]
+      self.locations.prepare_proxy_locations()
+      self.sequence = ScoutForProxies(self.locations)
 
     with it("can be instantiated"):
-      expect(self.sequence).to(be_a(ScoutNaturalExpansion))
+      expect(self.sequence).to(be_a(ScoutForProxies))
 
   with description("Executing the sequence") as self:
     with before.each: # pylint: disable=no-member
       self.locations = LocationData()
       self.locations.natural = Point2((50.0, 50.0))
-      self.sequence = ScoutNaturalExpansion(self.locations)
+      self.locations.map_center = Point2((100.0, 100.0))
+      self.locations.ordered_expansions = [None, None, Point2((25.0, 25.0)), Point2((35.0, 35.0))]
+      self.locations.prepare_proxy_locations()
+      self.sequence = ScoutForProxies(self.locations)
 
       self.scv_unit = doubles.InstanceDouble('sc2.unit.Unit')
       doubles.allow(self.scv_unit).tag.and_return(111)
@@ -54,25 +62,27 @@ with description("ScoutNaturalExpansion") as self:
       self.tick = Tick(target=self.scv, tree=self.tree, blackboard=self.blackboard)
       
     with description("Entering the sequence") as self:
-      with it("has natural position in the blackboard"):
+      with it("has scouting locations in the blackboard"):
         self.sequence.enter(self.tick)
-        expect(self.blackboard.get('natural_position', self.tick.tree.id)).to(be_a(Point2))
-        expect(self.blackboard.get('natural_position', self.tick.tree.id)).to(equal(self.locations.natural))
+        expect(self.blackboard.get('scouting_locations', self.tick.tree.id)).to(be_a(deque))
 
-    with description("Scouting natural expansion") as self:
-      with it("scouts the natural expansion"):
+    with description("Scouting for proxies") as self:
+      with it("scouts"):
         doubles.allow(self.scv_unit).orders.and_return([])
         doubles.allow(self.scv_unit).move.and_return(doubles.InstanceDouble('sc2.unit_command.UnitCommand'))
 
         self.sequence.enter(self.tick)
+        self.sequence.open(self.tick)
         status = self.sequence.tick(self.tick)
         expect(status).to(equal(BTreeStatus.RUNNING))
 
-        doubles.allow(self.scv_unit).orders.and_return([doubles.InstanceDouble('sc2.unit.UnitOrder', target=self.locations.natural)])
-        doubles.allow(self.scv_unit).order_target.and_return(self.locations.natural)
-        status = self.sequence.tick(self.tick)
-        expect(status).to(equal(BTreeStatus.RUNNING))
+        print(self.blackboard._tree_memory)
+        doubles.allow(self.scv_unit).position.and_return(Point2((25.0, 25.0)))
 
-        doubles.allow(self.scv_unit).position.and_return(Point2((48.0, 48.0)))
+        status = self.sequence.tick(self.tick)
+        expect(status).to(equal(BTreeStatus.SUCCESS))
+        print(self.blackboard._tree_memory)
+
+        doubles.allow(self.scv_unit).position.and_return(Point2((35.0, 35.0)))
         status = self.sequence.tick(self.tick)
         expect(status).to(equal(BTreeStatus.SUCCESS))
