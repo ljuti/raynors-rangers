@@ -52,7 +52,7 @@ with description("Barracks") as self:
         action = doubles.InstanceDouble('sc2.unit_command.UnitCommand', ability=AbilityId.BARRACKSTRAIN_MARAUDER, unit=self.structure.unit)
         doubles.allow(self.unit).train.and_return(action)
 
-      with it("can train marines") as self:
+      with it("can train marauders") as self:
         expect(self.structure.train_marauder).to(be_callable)
         expect(self.structure.train_marauder()).to(be_true)
         expect(self.command_bus.actions).not_to(be_empty)
@@ -65,7 +65,7 @@ with description("Barracks") as self:
         action = doubles.InstanceDouble('sc2.unit_command.UnitCommand', ability=AbilityId.BARRACKSTRAIN_REAPER, unit=self.structure.unit)
         doubles.allow(self.unit).train.and_return(action)
 
-      with it("can train marines") as self:
+      with it("can train reapers") as self:
         expect(self.structure.train_reaper).to(be_callable)
         expect(self.structure.train_reaper()).to(be_true)
         expect(self.command_bus.actions).not_to(be_empty)
@@ -78,7 +78,7 @@ with description("Barracks") as self:
         action = doubles.InstanceDouble('sc2.unit_command.UnitCommand', ability=AbilityId.BARRACKSTRAIN_GHOST, unit=self.structure.unit)
         doubles.allow(self.unit).train.and_return(action)
 
-      with it("can train marines") as self:
+      with it("can train ghosts") as self:
         expect(self.structure.train_ghost).to(be_callable)
         expect(self.structure.train_ghost()).to(be_true)
         expect(self.command_bus.actions).not_to(be_empty)

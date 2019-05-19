@@ -108,6 +108,10 @@ with description("Starport") as self:
       with it("can train medivacs"):
         expect(self.structure.train_medivac).to(be_callable)
 
+    with description("Liberators") as self:
+      with it("can train liberators"):
+        expect(self.structure.train_medivac).to(be_callable)
+
     with description("Banshees") as self:
       with it("can train banshees"):
         expect(self.structure.train_banshee).to(be_callable)

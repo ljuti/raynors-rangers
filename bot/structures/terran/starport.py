@@ -20,6 +20,11 @@ class Starport(ProductionStructure, Landable, Liftable, Reactorable, Techlabable
       self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC, queue=queue))
     return self.command_bus.queue(self.unit.train(UnitTypeId.MEDIVAC, queue=queue))
 
+  def train_liberator(self, amount=1, queue=True):
+    if amount == 2 and self.has_reactor(self.structures):
+      self.command_bus.queue(self.unit.train(UnitTypeId.LIBERATOR, queue=queue))
+    return self.command_bus.queue(self.unit.train(UnitTypeId.LIBERATOR, queue=queue))
+
   def train_banshee(self, queue=True):
     return self.command_bus.queue(self.unit.train(UnitTypeId.BANSHEE, queue=True))
 
