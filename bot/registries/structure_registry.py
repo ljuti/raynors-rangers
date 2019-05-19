@@ -74,9 +74,15 @@ class StructureRegistry(BaseRegistry):
     return True
 
   def complete(self, unit: Unit):
+    """ Not yet properly implemented """
     pass
 
   def resolve_position_for(self, unit):
+    """ Resolves proper position for the structure
+    
+    Supply depots report 'incorrect' or 'funny' positions and to be able
+    to query them later, we need to fix the position offset.
+    """
     if unit.type_id == UnitTypeId.SUPPLYDEPOT:
       return unit.position.offset(Point2((-0.5, -0.5)))
     else:
@@ -143,6 +149,10 @@ class StructureRegistry(BaseRegistry):
     }
 
   def get_objects_with_unit_type(self, unit_type):
+    """ Returns structure objects for given unit type
+    
+    For example, calling with UnitTypeId.STARPORT returns all starports.
+    """
     keys = [k for k in self.objects.keys() if self.objects[k].get("type", None) == unit_type]
     if keys:
       return [self.get_with_tag(k) for k in keys]

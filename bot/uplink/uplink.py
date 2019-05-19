@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+""" Uplink
+
+This class can be used to push (debug) data from the game over a websocket
+connection.
+
+API:
+* relay - for relaying action information
+* unit - for reporting a state of a unit
+* structure - for reporting a state of a structure
+"""
+
 import socketio
 import json
 

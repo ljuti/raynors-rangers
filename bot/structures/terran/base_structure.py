@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Base Structure
+
+This is the base structure class that contains shared functionality for
+all Terran base structures.
+"""
+
 import abc
 
 from sc2.unit import Unit
@@ -14,6 +21,7 @@ class BaseStructure():
     self.designation = None
     self.saved_position = unit.position
     self.service_hub = service_hub
+    self.close_enemies = None
 
   @abc.abstractmethod
   def post_construction_complete(self, game):

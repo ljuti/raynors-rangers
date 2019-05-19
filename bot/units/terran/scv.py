@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+""" SCV Unit
+
+Terran SCV unit class.
+"""
+
 from bot.units.terran.base_unit import BaseUnit
 
 from bot.btrees.core.blackboard import Blackboard
@@ -11,8 +17,6 @@ class SCVUnit(BaseUnit):
     self.unit = unit
     self.model = model
     self.services = service_hub
-    self.behavior = None
-    self.blackboard = None
 
   def update(self, game, unit):
     self.unit = unit

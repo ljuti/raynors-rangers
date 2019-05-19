@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+""" Barracks Structure
+
+Terran barracks structure class.
+
+Implements the following abilities:
+- Landable
+- Liftable
+- Reactorable
+- Techlabable
+"""
+
 from bot.structures.terran.production_structure import ProductionStructure
 from bot.structures.terran.abilities.landable import Landable
 from bot.structures.terran.abilities.liftable import Liftable
