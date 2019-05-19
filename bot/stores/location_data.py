@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Location Data Store
+
+Location Data Store keeps track of interesting Location objects and points
+in the game map.
+"""
+
 from collections import deque
 from sc2.position import Point2
 

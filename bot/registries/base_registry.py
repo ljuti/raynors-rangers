@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+""" Base Registry
+
+Base class for registries.
+"""
+
 from collections import defaultdict
 
 class BaseRegistry():

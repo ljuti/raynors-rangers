@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Build Order Data Store
+
+The purpose of this data store is to keep track of the current build order
+under execution and what's the status of the build.
+"""
+
 class BuildOrderData():
   def __init__(self):
     self.build_order_loaded = False

@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Build Commander
+
+This is the high-level commander class for building structures in game.
+A good candidate for implementing build order execution.
+"""
+
 from bot.commanders.commander import Commander
 
 class BuildCommander(Commander):

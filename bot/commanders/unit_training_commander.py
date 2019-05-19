@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Unit Training Commander
+
+This is the high-level commander class for building army units and
+compositions requested by the army commander or the main general.
+"""
+
 from bot.commanders.commander import Commander
 
 from sc2.constants import UnitTypeId

@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Location
+
+This class defines a Location object that will be instantiated for
+game map locations that are of interest.
+"""
+
 from sc2.position import Point2, Point3
 
 class Position():

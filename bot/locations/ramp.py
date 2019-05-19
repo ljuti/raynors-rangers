@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Ramp
+
+Ramp objects are special location objects. They can tell how the buildings
+should be positioned for walling off a ramp.
+"""
+
 from bot.locations.location import Location, StructurePosition
 
 from sc2.game_info import Ramp

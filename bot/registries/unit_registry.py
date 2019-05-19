@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+""" Unit Registry
+
+Unit registry keeps track of all units that the AI has at any given moment.
+
+Units can be queried by a tag or by type of units.
+"""
+
 from bot.registries.base_registry import BaseRegistry
 
 from bot.units.terran.base_unit import BaseUnit
@@ -141,7 +149,7 @@ class UnitRegistry(BaseRegistry):
     return list(self.get_with_unit_type(UnitTypeId.VIKING))
 
   def widow_mines(self) -> list:
-    return list(self.get_with_unit_type(UnitTypeId.WIDOW_MINE))
+    return list(self.get_with_unit_type(UnitTypeId.WIDOWMINE))
 
   def load_models_and_klasses(self):
     self.models = {

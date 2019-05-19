@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+""" Bot Main Script
+
+Guidelines:
+- on_step (called by the bot runner) should only have pre-game setup
+  and main loop call
+- try to keep main loop to 15 lines or less
+"""
+
 import time
 import json
 from pathlib import Path

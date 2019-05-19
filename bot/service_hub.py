@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""Service Hub
+
+Service Hub provides a global point of access to different services
+the bot and its components need without coupling the users to the
+concrete class that implements it.
+"""
+
 from bot.command_bus import CommandBus
 from bot.registries.unit_registry import UnitRegistry
 from bot.registries.structure_registry import StructureRegistry

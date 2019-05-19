@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+""" Structure Registry
+
+Structure registry keeps track of all buildings that the AI has at any
+given moment. When the construction of a new building begins, it is
+registered to the registry. When the construction completes, its position
+and possible designation are recorded to the structure object.
+"""
+
 from bot.registries.base_registry import BaseRegistry
 
 from bot.structures.models.terran.armory import ArmoryModel

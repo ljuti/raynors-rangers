@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+""" Data Store
+
+Data Store contains all data stores for the bot.
+"""
+
 from bot.stores.build_order_data import BuildOrderData
 from bot.stores.economic_data import EconomicData
 from bot.stores.location_data import LocationData

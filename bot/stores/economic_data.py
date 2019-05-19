@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+""" Economic Data Store
+
+Economic Data Store tracks how many resources have been collected, spent,
+and destroyed.
+"""
+
 from sc2.game_state import Common
 
 class EconomicData():
